@@ -301,7 +301,7 @@ unobash(){
     # Script
 
 	# Sources
-	source ~/.unobash/git/git-completion.bash
+	source ~/.unobash/unobash/git/git-completion.bash
 	
      firstTaskPath=${HOME}/Documents/hera/repo/task1/trunk
      secondTaskPath=${HOME}/Documents/hera/repo/task2/trunk
@@ -361,7 +361,7 @@ unobash(){
    #      echo '>> ssh-agent not run. Starting it..'
    #      #eval $(ssh-agent -s) > /dev/null
    #fi    
-   source ~/.unobash/ssh/ssh-find-agent/ssh-find-agent.sh
+   source ~/.unobash/unobash/ssh/ssh-find-agent/ssh-find-agent.sh
    #run ssh-agent (will remember key passwords)
    ssh-find-agent -a || eval $(ssh-agent) >/dev/null
    # for Mac: add all keys that has passwords stored in keychain to currently running ssh-agent.
@@ -391,11 +391,11 @@ rp(){
 #screen -AdmS main -t Mac bash
 #screen -S main -X screen -t DEV ping -t 4 8.8.8.8
 screenCtcMac(){
-  screen -c ~/.unobash/screen/.screenrc_ctc
+  screen -c ~/.unobash/unobash/screen/screenrc_ctc
 }
 
 screenCtcDevVm(){                                                                                                                                                                         
-  screen -c ~/.unobash/screen/.screenrc_devvm                                                                                                                                          
+  screen -c ~/.unobash/unobash/screen/screenrc_devvm                                                                                                                                          
 }
 
 

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-source /Users/sergeyu/.unobash/unobash
+source ~/.unobash/unobash/unobash
 
 
