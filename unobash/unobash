@@ -1,0 +1,599 @@
+# ~/unobash: executed by bash(1) for non-login shells and for bash_profile for login shels.
+ 
+
+
+        #if not running interactively, don't do anything
+        case $- in
+        *i*) ;;
+        *) return;;
+        esac
+
+        # don't put duplicate lines or lines starting with space in the history.
+        # See bash(1) for more options
+        HISTCONTROL=ignoreboth
+
+        # append to the history file, don't overwrite it
+        shopt -s histappend
+
+        # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+        HISTSIZE=1000
+        HISTFILESIZE=2000
+
+        # check the window size after each command and, if necessary,
+        # update the values of LINES and COLUMNS.
+        shopt -s checkwinsize
+
+        # If set, the pattern "**" used in a pathname expansion context will
+        # match all files and zero or more directories and subdirectories.
+        #shopt -s globstar
+
+        # make less more friendly for non-text input files, see lesspipe(1)
+        [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+        # set variable identifying the chroot you work in (used in the prompt below)
+        if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+                debian_chroot=$(cat /etc/debian_chroot)
+        fi
+
+        # set a fancy prompt (non-color, unless we know we "want" color)
+                case "$TERM" in
+                xterm-color) color_prompt=yes;;
+                esac
+
+        # uncomment for a colored prompt, if the terminal has the capability; turned
+        # off by default to not distract the user: the focus in a terminal window
+        # should be on the output of commands, not on the prompt
+        #force_color_prompt=yes
+
+                if [ -n "$force_color_prompt" ]; then
+                if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+                color_prompt=yes
+                else
+                color_prompt=
+
+                fi
+                fi
+
+                if [ "$color_prompt" = yes ]; then
+                PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+                else
+                PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+                fi
+                unset color_prompt force_color_prompt
+
+        # If this is an xterm set the title to user@host:dir
+                case "$TERM" in
+                xterm*|rxvt*)
+                PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+                ;;
+                *)
+                ;;
+                esac
+
+        # enable color support of ls and also add handy aliases
+                if [ -x /usr/bin/dircolors ]; then
+                test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+                alias ls='ls --color=auto'
+        #alias dir='dir --color=auto'
+        #alias vdir='vdir --color=auto'
+
+                alias grep='grep --color=auto'
+                alias fgrep='fgrep --color=auto'
+                alias egrep='egrep --color=auto'
+                fi
+
+        # colored GCC warnings and errors
+        #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+        # some more ls aliases
+                alias ll='ls -alF'
+                alias la='ls -A'
+                alias l='ls -CF'
+
+        # Add an "alert" alias for long running commands.  Use like so:
+        #   sleep 10; alert
+                alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+        # Alias definitions.
+        # You may want to put all your additions into a separate file like
+        # ~/.bash_aliases, instead of adding them here directly.
+        # See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+                if [ -f ~/.bash_aliases ]; then
+                . ~/.bash_aliases
+                fi
+
+        # enable programmable completion features (you don't need to enable
+        # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+        # sources /etc/bash.bashrc).
+                if ! shopt -oq posix; then
+                if [ -f /usr/share/bash-completion/bash_completion ]; then
+                . /usr/share/bash-completion/bash_completion
+                elif [ -f /etc/bash_completion ]; then
+                . /etc/bash_completion
+                fi
+                fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # # # # # # #     CS4 cs4 mods    # # # # # # # #
+
+UNOBASH_VERSION=0.1.9
+
+unobash(){
+  _print_unobash_help(){
+       echo "###### Installation:"
+       echo "Section is not coplete now. See ICloud manuals."
+       echo "###### Options:"
+       echo "--version        : show unubash version"
+       echo "--changelog      : show changes"
+  }
+
+  case $1 in
+    --version | -v)   echo Unobash
+                      echo version: $UNOBASH_VERSION;;
+    --changelog | -c) echo "Changes:"
+                      echo "- screen: change DEV connection string to one command with hop"
+                      echo "- jmeter: add alias to run with proxy"
+                      echo "- MacOS terminal files/folder/link hightligting"
+                      echo "- ssh-find-agent utility"
+                      echo "- ssh keys keychain integration"
+                      echo "- .bashrc in .unobash folder accessible by link from ~/"
+                      echo "- unobash -changelog option"
+                      echo "- fix of fhen other users see hardcoded home to cs4. Now it defined by whoami";;
+    --help | -h)      _print_unobash_help;;
+    *)                echo "Error! Check command usage: --help";;
+              
+  esac
+}
+
+ # Variables:
+  
+  # static constatnts
+
+    # Pathes
+      UBUNTUHOME=/home/$(whoami)
+      UBUNTU_JAVA_HOME='/opt/jdk'     
+      UBUNTU_GRADLE_HOME='/opt/gradle-2.2.1'
+      UBUNTU_M2_HOME='/opt/mvn'
+      #UBUNTU_TOMCAT='/opt/tomcat'
+      UBUNTU_M2='UBUNTU_M2_HOME/bin'
+
+      MACHOME=/Users/$(whoami)
+      #MAC_HYBRIS_ENV_VARIABLES_SCRIPT_RELATIVE_PATH='Projects/idea/ctco/ctco-ecom-local/hybris/bin/platform/setantenv.sh'
+      MAC_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home'
+      MAC_GRADLE_HOME='/Applications/gradle-2.2.1'
+      MAC_M2_HOME='/Applications/apache-maven-3.2.1'
+      MAC_M2='$M2_HOME/bin'
+      MAC_UNISON_VERION=2.51.2
+      MAC_UNISON_HOME=/usr/local/Cellar/unison/$MAC_UNISON_VERION
+     # Hybris part
+      #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
+      
+      # MAC_HYBRIS_HOME_RELATIVE=Projects/idea/ctco/ctco-ecom-local/hybris   #sergey
+      MAC_HYBRIS_HOME_RELATIVE=Work/Projects/idea/ctco-ecom-local/hybris     #cs4
+      MAC_PLATFORM_HOME_RELATIVE_PATH=$MAC_HYBRIS_HOME_RELATIVE/bin/platform
+      export ANT_HOME=/opt/apache-ant-1.9.1
+      export PATH=$PATH:$ANT_HOME/bin      
+      export -p PLATFORM_HOME=$MAC_PLATFORM_HOME_RELATIVE_PATH
+      #export -p ANT_OPTS="-Xmx200m -XX:MaxPermSize=128M"
+      #export -p ANT_HOME=$PLATFORM_HOME/apache-ant-1.9.1
+      #export -p PATH=$ANT_HOME/bin:$PATH
+      chmod +x "$ANT_HOME/bin/ant"
+      chmod +x "$PLATFORM_HOME/license.sh"
+      #bin_path=/Users/cs4/Documents/Projects/ctco-ecom-local-attempt/tools
+     
+      #Maven properties
+       export M2_HOME=$MAC_M2_HOME
+       export M3_HOME=$MAC_M2_HOME
+       export M2=$MAC_M2
+       export M2_REPO=/Users/cs4/.m2/repository
+
+       PATH=$PATH:$HOME/bin
+       PATH=$PATH:${bin_path}/bin
+       PATH=$PATH:${bin_path}/ant/bin
+       PATH=$PATH:$M2 
+    # Netwoking
+      IP_IVAN='10.0.0.214'
+      #IP_BUTESKUL=10.0.0.
+
+  
+    # Other
+      OS_TYPE_UBUNTU='Ubuntu';
+      OS_TYPE_MAC='Mac';
+      timestamp='';
+      timestamp_lock='0'
+      
+
+  # initialized variables (should functions go before?)
+
+    # core/global
+      
+    getOs(){
+        case $(uname) in
+          Darwin) echo 'Mac';;
+          Linux) echo 'Ubuntu';;
+        esac
+      }   
+
+    OS=$(getOs);
+    
+
+    # system variables
+      ENV=dev
+      IDEA_JDK=/opt/jdk_all/jdk1.7.0_45
+
+
+      if [[ $OS == $OS_TYPE_UBUNTU ]]
+
+          then  
+           export HOME=$UBUNTUHOME
+           export PATH=$PATH:$HOME/bin
+           
+	   export JAVA_HOME=$UBUNTU_JAVA_HOME
+           export PATH=$PATH:$JAVA_HOME/bin
+          
+	   export GRADLE_HOME=$UBUNTU_GRADLE_HOME
+           export PATH=$PATH:$GRADLE_HOME/bin
+           
+	   export M2_HOME=$UBUNTU_M2_HOME
+           export PATH=$PATH:$M2_HOME/bin
+          
+       else
+           export HOME=$MACHOME
+           export PATH=$PATH:$HOME/bin
+
+           # ls colour highlihts
+           export CLICOLOR=1
+           
+           export JAVA_HOME=$MAC_JAVA_HOME
+           export PATH=$PATH:$JAVA_HOME/bin
+          
+           export GRADLE_HOME=MAC_GRADLE_HOME
+           export PATH=$PATH:$GRADLE_HOME/bin
+           
+           export M2_HOME=$MAC_M2_HOME
+           export M2=$M2_HOME/bin
+           export PATH=$PATH:$M2
+           export PATH=$PATH:/Applications/MySQLWorkbench.app/Contents/MacOS
+           
+           export UNISON_HOME=$MAC_UNISON_HOME
+           export PATH=$PATH:$UNISON_HOME/bin
+
+          # hybris part
+           # Colored output for ant
+             export ANT_ARGS='-logger org.apache.tools.ant.listener.AnsiColorLogger'
+             export ANT_OPTS=' -Xms32m -Xmx1200m -XX:PermSize=500m -XX:MaxPermSize=512m '
+
+           # Project aliases
+             alias hlogs='tail -200f ${HOME}/${MAC_HYBRIS_HOME_RELATIVE}/log/tomcat/console.log'
+             #alias hdb="grep 'db' /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/config/local.properties"
+             #alias htom='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/bin/platform/tomcat-6/bin'
+             #alias hconf='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/config/'
+             alias hplat='cd ${HOME}/${MAC_PLATFORM_HOME_RELATIVE_PATH}'
+             #alias psjava='ps -ef | grep -i java'
+	     #alias jmeter='sh /Applications/apache-jmeter-3.2/bin/jmeter.sh'
+	     alias jmeterproxy='sh /Applications/apache-jmeter-3.2/bin/jmeter.sh -H 127.0.0.1 -P 8081'
+           
+
+      fi 
+
+    setHybrisStuff () {
+        case $OS in 
+          Mac) curdir=$(pwd); cd ${HOME}; cd ${MAC_PLATFORM_HOME_RELATIVE_PATH}; . setantenv.sh; cd $curdir;;
+        esac
+    }
+    setHybrisStuff; 
+
+    # Script
+
+	# Sources
+	source ~/.unobash/git/git-completion.bash
+	
+     firstTaskPath=${HOME}/Documents/hera/repo/task1/trunk
+     secondTaskPath=${HOME}/Documents/hera/repo/task2/trunk
+
+      tmpDir=${HOME}/tmp;
+      initTmpDir () {
+        
+                           targetDir=$tmpDir;
+               dirToReturn=$(pwd);
+               cd $targetDir;
+               curDir=$(pwd);
+               if [ $curDir != $targetDir ]
+                   then   mkdir $targetDir;
+               fi
+    
+               cd $dirToReturn;
+        
+      } 
+      initTmpDir;
+
+
+# aliases not unified yet
+  # Ubuntu
+
+     if [[ $OS == $OS_TYPE_UBUNTU ]]
+
+      then
+        alias geth='cd '${HOME}'/Documents/hera/repo/trunk'
+        alias pin='cd '${HOME}'Documents/hera/tasks/NBDO_PO\ add\ new\ fields'
+        alias bashrc='vim '${HOME}'/.bashrc && source ~/.bashrc >& /dev/null';
+
+        alias idea='sh '${HOME}'/.idea-IU-141.2735.5/bin/idea.sh'
+        alias sqldeveloper='sh /opt/sqldeveloper/sqldeveloper.sh'
+
+        alias mountcrypt='sudo mount -t ecryptfs /media/cs4/Ext42/crypted/ /media/cs4/Ext42/crypted/'
+
+        alias vncviewer='/opt/etc/VNC-Viewer-5.1.1-Linux-x86'
+        alias vbox.lastname='hera_full_imported_backup_20142015 Clone bind Clone'
+        alias vbox.start='VBoxManage startvm "hera_full_imported_backup_20142015 Clone bind Clone" --type headless'
+        alias vbox.savestate='VBoxManage controlvm "hera_full_imported_backup_20142015 Clone bind Clone" savestate'
+      else
+        alias gradle='sh /Applications/gradle-2.2.1/bin/gradle'
+        #commented due to attempt to add to PATH
+	#alias mvn='sh /Applications/apache-maven-3.2.1/bin/mvn'
+        alias scpapp='scp -r /Applications/apache-tomcat-8.0.35/webapps/sniper/ cs4@srvrb:/opt/tomcat/webapps'
+        alias cdiCloudDrive='cd /Users/cs4/Library/Mobile\ Documents/com~apple~CloudDocs'
+    fi
+
+############### Setup ssh-agent to reduse number of ssh password requests ##############
+############### Reused script in a separate file                          ###############
+
+   #is_ssh_agent_run=$(pgrep ssh-agent);
+   #if [ ${#is_ssh_agent_run} -ge 2 ]
+   #    then 
+   #      echo '>> sss agent already run'
+   #    else
+   #      echo '>> ssh-agent not run. Starting it..'
+   #      #eval $(ssh-agent -s) > /dev/null
+   #fi    
+   source ~/.unobash/ssh/ssh-find-agent/ssh-find-agent.sh
+   #run ssh-agent (will remember key passwords)
+   ssh-find-agent -a || eval $(ssh-agent) >/dev/null
+   # for Mac: add all keys that has passwords stored in keychain to currently running ssh-agent.
+   # for console Ubumtu skipp this step as there is no keychain.
+   if [[ $OS == $OS_TYPE_UBUNTU ]]
+      then
+	echo "Ubuntu keychain ssh-key passwords integration to ssh-agent skipped" 
+        # ssh-add ${HOME}/.ssh/id_rsa >/dev/null
+      else
+         ssh-add -A ${HOME}/.ssh/id_rsa >/dev/null
+   fi 
+   #OR key->to keychain as so: ssh-add -K ssh-add -K ${HOME}/.ssh/proxy_rsa > /dev/null
+   
+############## Run Local Proxy Server & tunel it to ssh ############
+rp(){
+  echo ">> Will work if rsa keys added to keychain and agent. Else add them."
+  ssh -D 8081 cs4@epuakyiw1056.kyiv.epam.com -p 2222 -i ~/.ssh/proxy_rsa
+}
+###############    Functions:    #############
+
+
+
+# Notes:
+# make screen tabs with command executed inside. See below. But has cons - this is made ini
+# function so if in the middle some command return not 0 else lines not executed. So better
+# make few .screenrc-like files and run screen pointing config file like "screen -c config_file".
+#screen -AdmS main -t Mac bash
+#screen -S main -X screen -t DEV ping -t 4 8.8.8.8
+screenCtcMac(){
+  screen -c ~/.unobash/screen/.screenrc_ctc
+}
+
+screenCtcDevVm(){                                                                                                                                                                         
+  screen -c ~/.unobash/screen/.screenrc_devvm                                                                                                                                          
+}
+
+
+#compile run playgound programms
+cr(){
+#   exec cd out &> /dev/null;
+#   curDir="'pwd'"
+#   if [ "'basedir $curDir'" != "src" ]
+#    then  echo 'should be runned from src..';
+#   fi
+#   cd ..
+	rm  src/out/com/cs4/test/*.class;
+	cd src;
+	javac *.java;
+	mv *.class out/com/cs4/test;
+	cd ..;
+	java -cp src/out/ com.cs4.test.Start
+}
+
+#patchUnoBash() {
+# 
+#}
+
+
+
+# HERA connections section
+
+str='$IVAN_IP'
+
+#fun(){
+# $str
+#}
+
+# etalon :)
+# 
+heraIMSConnect() {
+  port=8149;
+
+  if [ $1 == '-h' ] || [ $1 == '--help' ]
+   then
+    echo 'Usage:'
+    echo ''
+    echo '       heraImsConnct [<ip> | -h | --help]'; echo '';
+    echo '       ip :   IP_IVAN';
+    echo '              IP_BUTESKUL'; echo '';  
+          echo '-h, --help:   this help'; echo '';
+  
+          return 0;
+  fi  
+
+  if [ $# -eq 0 ]
+    then
+   host=$IP_IVAN;
+    else
+  host=${!1};
+
+  fi
+  printf "\n             ...Note to use SOCKS 5 proxy in browser. Browse as regular site.\n\n";
+  ssh -D $port ssht@$host;
+}
+
+
+heraDBConnect() {
+  host=$1;
+  port=6210;
+   
+  printf "\n<======= Connecting ... ====>\n"; 
+  printf "Use local port $port =======>\n";
+  exec ssh -L $port:10.135.51.40:$port ssht@$host;
+}
+
+
+
+clearIdeaCache() { 
+ rm -rf ~/.IntelliJIdea14/system ~/Library/Caches/IntelliJIdea14/tomcat ~/Library/Caches/IntelliJIdea14/Maven
+}
+
+# Switch task. Switches between two tasks
+
+st() {
+  if [ [ $# -eq 0 ] && [ "$PWD" == "$firstTaskPath" ] ] 
+    then  cd $secondTaskPath;
+          return;
+    else  cd $firstTaskPath;
+ #         return;
+  fi   
+
+  if [ [ $# -eq 1 ] && [ $1 == 1 ] ]
+     then cd $firstTaskPath;
+         return;
+     else
+        if [ [ $# -eq 1 ] && [ $1 == 2 ] ] 
+           then cd $secondTaskPath;
+                return;
+           else
+                echo "Error";
+                cd;  
+        fi
+  fi
+}
+
+tarTask() {
+  if [ [ $# -eq 1 ] && $timestamp != 0 ] ] 
+      then case $1 in
+              1) tar -czvf ${tmpDir}/trunk-${timestamp}.tar.gz -C $firstTaskPath . --exclude='build' --exclude='buildSrc' --exclude='buildSrc' --exclude='classes';;
+              2) tar -czvf ${tmpDir}/Downloads/trunk-${timestamp}.tar.gz -C $secondTaskPath . --exclude='build' --exclude='buildSrc' --exclude='buildSrc' --exclude='classes';;
+           esac
+  else
+      echo !!! Error. Specify task number and timestamp for fiel name;
+  fi
+}
+
+sendFile () {
+  
+  extArg='';
+
+  if [ -d $1 ]  
+      then extArg='-r';   
+  fi
+
+        if [ $# -eq 1 ]
+    then  echo "Files starting with '.' will not be available on destination due to known scp behavior.";
+      scp $extArg $1 cs4@kexital.ddns.net:${MACHOME}/Downloads
+    else  scp $extArg $1 cs4@kexital.ddns.net:${MACHOME}/Downloads/$2
+  
+  fi
+}
+
+setTimestamp(){
+  timestamp=$(date +%Y%m%d);
+}
+
+setHybrisJava(){
+ export JAVA_HOME=$MAC_HYBRIS_JAVA_HOME;
+ export PATH=$PATH:$JAVA_HOME/bin;
+}
+
+unsetHybrisJava(){
+ export JAVA_HOME=$MAC_JAVA_HOME;
+ export PATH=$PATH:$JAVA_HOME/bin;
+}
+
+sendTarFromDownloads() {
+  if [ ${#timestamp} == 8 ]
+  then 
+        echo "Files starting with '.' will not be available on destination due to known scp behavior."; 
+        scp ${tmpDir}/trunk-${timestamp}.tar.gz  cs4@kexital.ddns.net:${MACHOME}/Downloads 
+  else
+       echo "Can't find file or file timestamp for name is no generated";
+
+  fi 
+}
+
+## old connections. May be removed
+
+alias hera_ims='ssh -D 8149 ssht@10.0.0.214'
+
+alias hera_sit_db_6210='ssh -L 6210:10.135.51.40:6210 ssht@10.0.0.214'
+alias hera_uat_db_6210='ssh -L 6210:10.135.49.47:6210 ssht@10.0.0.214'
+alias hera_sit_web='ssh -L 8081:87.254.209.181:8080 ssht@10.0.0.140'
+alias hera_sit_web='ssh -L 8081:87.254.209.181:8080 ssht@10.0.0.140'
+
+alias hera_sit_web_vania='ssh -L 8081:87.254.209.181:8080 ssht@10.0.0.214'
+alias hera_sit_web_vania_by_dns='ssh -L 8081:herasit.access.nsn.com:8080 ssht@10.0.0.214'
+alias hera_uat_web_ivan='ssh -L 8082:87.254.209.21:8080 ssht@10.0.0.214'
+
+
+
+
+
+# Deprecated
+
+#       getOsDeprecated(){
+#       tuID=$(lsb_release -a | grep 'Ubuntu' | sed -e 's/?![Ubuntu]//')ubunituID=$(lsb_release -a | grep 'Ubuntu' | sed -e 's/?![Ubuntu]//');
+#       tuID=$(cat /etc/issue | grep 'Ubuntu' | sed -e 's/?![Ubuntu]//')ubunituID=$(lsb_release -a | grep 'Ubuntu' | sed -e 's/?![Ubuntu]//');
+#       tuID=$(cat /etc/issue | grep 'Ubuntu' | sed -e 's/?![Ubuntu]//'); 
+#       macID=$(sw_vers -productName | grep Mac);
+#           if [ ${#ubuntuID} > 1 ]
+#             then
+#                res=$OS_TYPE_UBUNTU;
+#             else if [ ${#macID} > 1 ]
+#                     then res=${OS_TYPE_MAC};
+#                  fi
+#           fi
+#           echo $res;
+#
+#       } 
+
+
+
+
+# Bash scripting notes:
+
+  # substitution is for function names: $(lsb_release -a), $('lsb_release -a') 
+  # expantion is for parameter (parameter expantion):  $parA , ${parA}, ${parA}xxx  ..and for deveiding paramValue off text folowing it withoiut w/spase 
+    #example: init var with func output:   var=$(lsb_release -a | grep 'Ubuntu' | sed -e 's/?![Ubuntu]//');
+     # indirect parameter expantion allows takes variable value by name of this variable stored in a string:   ${!a}, btw .. ${!1} if $1 stores just a name of variable/ see heraImsConnection.
+  # init var with func output:   var=$(find $(echo $i | sed ’s/AnGST\/.*/AnGST\//’) -name “*.seq”);
+
+  # 
+

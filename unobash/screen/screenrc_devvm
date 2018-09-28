@@ -1,0 +1,35 @@
+# Screen uses .bashrc instead .bash_profile
+shell -$SHELL
+# set screen scrollback
+scrollback 1000000
+
+screen -t git
+select 0
+stuff "cd /app/ctco-ecom^M"
+screen -t bash
+select 1
+screen -t bash
+select 2
+screen -t bash
+select 3
+screen -t bash
+select 4
+screen -t bash
+select 5
+screen -t "---------------  Run  ----------------"
+select 6
+screen -t "Hybris START"
+select 7
+stuff "cd /app/hybris/bin/platform^M"
+stuff "ant clean all updatesystem -Dtenant=master && sh hybrisserver.sh debug  | tee ../../log/hybris_start_\"$(date +%F_%R)\".log"
+screen -t "Hybris STOP"
+select 8
+stuff "cd /app/hybris/bin/platform^M"
+stuff "sh hybrisserver.sh stop"
+screen -t "IBM MQ"
+select 9
+stuff "/opt/mqm/bin/strmqm QM_DEVELOP^M"
+screen -t "CTCMocks"
+select 10
+stuff "cd /app/ctc-mocks/^M"
+stuff "mvn jetty:run^M"

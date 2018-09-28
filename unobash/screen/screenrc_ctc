@@ -1,0 +1,26 @@
+# Screen uses .bashrc instead .bash_profile
+shell -$SHELL
+# set screen scrollback
+scrollback 1000000
+screen -t bash
+select 0
+#stuff "bash^M"
+screen -t mac
+select 1
+screen -t "DEV VM"
+select 2
+#stuff "ssh dev@192.168.56.11^M"
+stuff "ssh -t cs4@epuakyiw1056.kyiv.epam.com -p 2222 -i ~/.ssh/proxy_rsa ssh dev@192.168.56.11^M"
+screen -t UAT151
+select 3
+stuff "ssh idii@q93pajhybr05.3p.adx.ctcx"
+screen -t UAT152
+select 4
+stuff "ssh idii@q93pajhybr06.3p.adx.ctcx"
+screen -t QA17
+select 5
+stuff "ssh iecu@ajlcq-hba14.labcorp.ad.ctc"
+screen -t QA15
+select 6
+stuff "cd ~/.unobash^M"
+stuff "ssh iecu@Q9LCAJHYBR01.labcorp.ad.ctc"
