@@ -174,7 +174,7 @@ unobash(){
 
       MACHOME=/Users/$(whoami)
       #MAC_HYBRIS_ENV_VARIABLES_SCRIPT_RELATIVE_PATH='Projects/idea/ctco/ctco-ecom-local/hybris/bin/platform/setantenv.sh'
-      MAC_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home'
+      MAC_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home'
       MAC_GRADLE_HOME='/Applications/gradle-2.2.1'
       MAC_M2_HOME='/Applications/apache-maven-3.2.1'
       MAC_M2='$M2_HOME/bin'
@@ -184,9 +184,9 @@ unobash(){
       #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
       
       # MAC_HYBRIS_HOME_RELATIVE=Projects/idea/ctco/ctco-ecom-local/hybris   #sergey
-      MAC_HYBRIS_HOME_RELATIVE=Work/Projects/idea/ctco-ecom-local/hybris     #cs4
+      MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/idea/ctco-ecom-local/hybris     #cs4
       MAC_PLATFORM_HOME_RELATIVE_PATH=$MAC_HYBRIS_HOME_RELATIVE/bin/platform
-      export ANT_HOME=/opt/apache-ant-1.9.1
+      export ANT_HOME=/opt/apache-ant-1.10.5
       export PATH=$PATH:$ANT_HOME/bin      
       export -p PLATFORM_HOME=$MAC_PLATFORM_HOME_RELATIVE_PATH
       #export -p ANT_OPTS="-Xmx200m -XX:MaxPermSize=128M"
@@ -284,12 +284,26 @@ unobash(){
              #alias htom='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/bin/platform/tomcat-6/bin'
              #alias hconf='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/config/'
              alias hplat='cd ${HOME}/${MAC_PLATFORM_HOME_RELATIVE_PATH}'
+             alias hgit='hplat && cd ../../../ctco-ecom'
+             alias gitstatus='git status | grep -vE "V[0-9]_[0-9]__|V[0-9]_[0-9][0-9]__|V[0-9][0-9]_[0-9]__|V[0-9][0-9]_[0-9][0-9]__"'
              #alias psjava='ps -ef | grep -i java'
 	     #alias jmeter='sh /Applications/apache-jmeter-3.2/bin/jmeter.sh'
 	     alias jmeterproxy='sh /Applications/apache-jmeter-3.2/bin/jmeter.sh -H 127.0.0.1 -P 8081'
            
 
       fi 
+
+git() {
+     if [ "$1" = "add" -o "$1" = "stage" ]; then
+         if [ "$2" = "." ]; then
+             printf "'git %s .' is currently disabled by your Git wrapper.\n" "$1";
+         else
+             command git "$@";
+         fi
+     else
+         command git "$@";
+     fi;
+ }
 
     setHybrisStuff () {
         case $OS in 
@@ -378,7 +392,7 @@ unobash(){
 ############## Run Local Proxy Server & tunel it to ssh ############
 rp(){
   echo ">> Will work if rsa keys added to keychain and agent. Else add them."
-  ssh -D 8081 cs4@epuakyiw1056.kyiv.epam.com -p 2222 -i ~/.ssh/proxy_rsa
+  ssh -D 8081 cs4@epuakyiw1056.kyiv.epam.com -p 2222 -i ~/.ssh/id_rsa_proxy
 }
 ###############    Functions:    #############
 
