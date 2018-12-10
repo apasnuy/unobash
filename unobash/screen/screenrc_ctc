@@ -1,5 +1,6 @@
 # Screen uses .bashrc instead .bash_profile
 shell -$SHELL
+termcapinfo xterm-256color|xterm-color|xterm|xterms|xs|rxvt ti@:te@
 # set screen scrollback
 scrollback 1000000
 screen -t bash
