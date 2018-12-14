@@ -404,12 +404,13 @@ rp(){
 # make few .screenrc-like files and run screen pointing config file like "screen -c config_file".
 #screen -AdmS main -t Mac bash
 #screen -S main -X screen -t DEV ping -t 4 8.8.8.8
+
 screenCtcMac(){
   screen -c ~/.unobash/unobash/screen/screenrc_ctc
 }
 
-screenCtcDevVm(){                                                                                                                                                                         
-  screen -c ~/.unobash/unobash/screen/screenrc_devvm                                                                                                                                          
+screenCtcDevVm(){
+  screen -c ~/.unobash/unobash/screen/screenrc_devvm
 }
 
 
