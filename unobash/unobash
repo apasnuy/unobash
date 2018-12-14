@@ -413,6 +413,10 @@ screenCtcDevVm(){
   screen -c ~/.unobash/unobash/screen/screenrc_devvm
 }
 
+screendef(){
+  screen -c ~/.unobash/unobash/screen/screen_defaults
+}
+
 
 #compile run playgound programms
 cr(){
