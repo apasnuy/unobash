@@ -131,7 +131,7 @@
 
 # # # # # # # #     CS4 cs4 mods    # # # # # # # #
 
-UNOBASH_VERSION=0.1.9
+UNOBASH_VERSION=0.2.0
 
 unobash(){
   _print_unobash_help(){
@@ -146,6 +146,7 @@ unobash(){
     --version | -v)   echo Unobash
                       echo version: $UNOBASH_VERSION;;
     --changelog | -c) echo "Changes:"
+                      echo "- project tools: add console aoutput monitor, Slack notifications, h*tool for logs, clioutput redirection
                       echo "- screen: change DEV connection string to one command with hop"
                       echo "- jmeter: add alias to run with proxy"
                       echo "- MacOS terminal files/folder/link hightligting"
@@ -173,34 +174,27 @@ unobash(){
       UBUNTU_M2='UBUNTU_M2_HOME/bin'
 
       MACHOME=/Users/$(whoami)
-      #MAC_HYBRIS_ENV_VARIABLES_SCRIPT_RELATIVE_PATH='Projects/idea/ctco/ctco-ecom-local/hybris/bin/platform/setantenv.sh'
       MAC_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home'
-      MAC_GRADLE_HOME='/Applications/gradle-2.2.1'
-      MAC_M2_HOME='/Applications/apache-maven-3.2.1'
+#      MAC_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home'
+      #MAC_GRADLE_HOME='/Applications/gradle-2.2.1'
+      #MAC_M2_HOME='/Applications/apache-maven-3.2.1'
+      MAC_M2_HOME='/usr/local/Cellar/maven/3.6.0/libexec' #from mvn -version
       MAC_M2='$M2_HOME/bin'
       MAC_UNISON_VERION=2.51.2
       MAC_UNISON_HOME=/usr/local/Cellar/unison/$MAC_UNISON_VERION
-     # Hybris part
+     
+      # Hybris part
+      #MAC_HYBRIS_ENV_VARIABLES_SCRIPT_RELATIVE_PATH='Projects/idea/ctco/ctco-ecom-local/hybris/bin/platform/setantenv.sh'
       #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
-      
       # MAC_HYBRIS_HOME_RELATIVE=Projects/idea/ctco/ctco-ecom-local/hybris   #sergey
-      MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/idea/ctco-ecom-local/hybris     #cs4
-      MAC_PLATFORM_HOME_RELATIVE_PATH=$MAC_HYBRIS_HOME_RELATIVE/bin/platform
-      export ANT_HOME=/opt/apache-ant-1.10.5
-      export PATH=$PATH:$ANT_HOME/bin      
-      export -p PLATFORM_HOME=$MAC_PLATFORM_HOME_RELATIVE_PATH
-      #export -p ANT_OPTS="-Xmx200m -XX:MaxPermSize=128M"
-      #export -p ANT_HOME=$PLATFORM_HOME/apache-ant-1.9.1
-      #export -p PATH=$ANT_HOME/bin:$PATH
-      chmod +x "$ANT_HOME/bin/ant"
-      chmod +x "$PLATFORM_HOME/license.sh"
-      #bin_path=/Users/cs4/Documents/Projects/ctco-ecom-local-attempt/tools
+      MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris
      
       #Maven properties
        export M2_HOME=$MAC_M2_HOME
        export M3_HOME=$MAC_M2_HOME
        export M2=$MAC_M2
        export M2_REPO=/Users/cs4/.m2/repository
+       export M3_REPO=/Users/cs4/.m2/repository
 
        PATH=$PATH:$HOME/bin
        PATH=$PATH:${bin_path}/bin
@@ -271,25 +265,47 @@ unobash(){
            export PATH=$PATH:/Applications/MySQLWorkbench.app/Contents/MacOS
            
            export UNISON_HOME=$MAC_UNISON_HOME
-           export PATH=$PATH:$UNISON_HOME/bin
+           export PATH=$PATH:$UNISON_HOME/bin 
+           alias unobashedit='vim ~/.unobash/unobash/unobash'
 
           # hybris part
-           # Colored output for ant
-             export ANT_ARGS='-logger org.apache.tools.ant.listener.AnsiColorLogger'
-             export ANT_OPTS=' -Xms32m -Xmx1200m -XX:PermSize=500m -XX:MaxPermSize=512m '
-
+             export HYBRIS_HOME=$HOME/$MAC_HYBRIS_HOME_RELATIVE
+      	     export PLATFORM_HOME=$HYBRIS_HOME/bin/platform/
+      	    
+             HYBRIS_PROJECT_DIR=$PLATFORM_HOME/../../../../ctco-ecom
+             HYBRIS_STARTUP_LOG_FILE_NAME=cs-startup.log
+	     ANT_LOG_FILE_NAME=$HYBRIS_STARTUP_LOG_FILE_NAME
+             HYBRIS_LOGS_HOME=$HYBRIS_HOME/log
+	     export -p HYBRIS_STARTUP_LOG_FILE=$HYBRIS_LOGS_HOME/$HYBRIS_STARTUP_LOG_FILE_NAME
+	     export -p ANT_LOG_FILE=$HYBRIS_LOGS_HOME/$ANT_LOG_FILE_NAME
+             MAC_PLATFORM_HOME_RELATIVE_PATH=$MAC_HYBRIS_HOME_RELATIVE/bin/platform
+             export ANT_HOME=/opt/apache-ant-1.10.5
+             export PATH=$PATH:$ANT_HOME/bin      
+		      #export ANT_ARGS='-logger org.apache.tools.ant.listener.AnsiColorLogger'
+		      #export ANT_OPTS=' -Xms32m -Xmx1200m -XX:PermSize=500m -XX:MaxPermSize=512m '
+		      #export -p ANT_OPTS="-Xmx200m -XX:MaxPermSize=128M"
+		      #export -p ANT_HOME=$PLATFORM_HOME/apache-ant-1.9.1
+		      #export -p PATH=$ANT_HOME/bin:$PATH
+		      #chmod +x "$ANT_HOME/bin/ant"
+		      #chmod +x "$PLATFORM_HOME/license.sh"
+		      #bin_path=/Users/cs4/Documents/Projects/ctco-ecom-local-attempt/tools
            # Project aliases
-             alias hlogs='tail -200f ${HOME}/${MAC_HYBRIS_HOME_RELATIVE}/log/tomcat/console.log'
-             #alias hdb="grep 'db' /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/config/local.properties"
-             #alias htom='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/bin/platform/tomcat-6/bin'
-             #alias hconf='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/config/'
-             alias hplat='cd ${HOME}/${MAC_PLATFORM_HOME_RELATIVE_PATH}'
-             alias hgit='hplat && cd ../../../ctco-ecom'
+             alias hstartlogs='tail -200f $ANT_LOG_FILE'
+             alias hmockfull='cd $HYBRIS_PROJECT_DIR/utils/ctc-mocks && mvn clean install -DskipTests jetty:run -Pdocker'
+             alias hmockrun='cd $HYBRIS_PROJECT_DIR/utils/ctc-mocks && mvn -DskipTests jetty:run -Pdocker'
+             alias hlogs='tail -200f ${HYBRIS_HOME}/log/tomcat/console.log'
+             alias hplat='cd $PLATFORM_HOME'
+             alias hgit='cd  $HYBRIS_PROJECT_DIR'
              alias gitstatus='git status | grep -vE "V[0-9]_[0-9]__|V[0-9]_[0-9][0-9]__|V[0-9][0-9]_[0-9]__|V[0-9][0-9]_[0-9][0-9]__"'
-             #alias psjava='ps -ef | grep -i java'
-	     #alias jmeter='sh /Applications/apache-jmeter-3.2/bin/jmeter.sh'
-	     alias jmeterproxy='sh /Applications/apache-jmeter-3.2/bin/jmeter.sh -H 127.0.0.1 -P 8081'
-           
+	     alias csNotifyToSlackTerminalChanel='slack chat send  "Build Finished :)" -ch terminal'
+	     alias csSendToSlackTerminalChannelPipe=' xargs -I {} slack chat send  "{}" -ch terminal'
+	     alias jmeterproxy='sh /opt/apache-jmeter-5.0/bin/jmeter.sh -H 127.0.0.1 -P 8081'
+		             #alias hdb="grep 'db' /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/config/local.properties"
+		             #alias htom='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/bin/platform/tomcat-6/bin'
+		             #alias hconf='cd /Users/cs4/Documents/Projects/ctco-ecom-local-attempt/hybris/config/'
+		             #alias psjava='ps -ef | grep -i java'
+			     #alias jmeter='sh /opt/apache-jmeter-5.0/bin/jmeter.sh'
+             alias hMocksStart='mvn clean install -DskipTests jetty:run -Pdocker' 
 
       fi 
 
@@ -312,7 +328,35 @@ git() {
     }
     setHybrisStuff; 
 
-    # Script
+hnotifyAppStartup() {
+  emptyness=""
+    while [[ true ]]
+      do
+        grepResult=`grep -e "INFO: Server startup\|\[Reflections\] Reflections took" $HYBRIS_STARTUP_LOG_FILE;`
+        if [[ $grepResult != $emptyness ]] ; then           
+          slack chat send  "Task finished! :)" -ch terminal;
+          slack chat send  "$grepResult" -ch terminal; 
+          break
+        fi
+        sleep 10
+    done
+}
+
+hnotifyAppBuild() {
+  emptyness=""
+    while [[ true ]]
+      do
+        grepResult=`grep -e "BUILD " $HYBRIS_STARTUP_LOG_FILE;`
+        if [[ $grepResult != $emptyness ]] ; then
+          slack chat send  "Task finished! :)" -ch terminal;
+          slack chat send  "$grepResult" -ch terminal;
+          break
+        fi
+        sleep 10
+    done
+}
+
+# Script
 
 	# Sources
 	source ~/.unobash/unobash/git/git-completion.bash
@@ -357,7 +401,7 @@ git() {
         alias vbox.start='VBoxManage startvm "hera_full_imported_backup_20142015 Clone bind Clone" --type headless'
         alias vbox.savestate='VBoxManage controlvm "hera_full_imported_backup_20142015 Clone bind Clone" savestate'
       else
-        alias gradle='sh /Applications/gradle-2.2.1/bin/gradle'
+        #alias gradle='sh /Applications/gradle-2.2.1/bin/gradle'
         #commented due to attempt to add to PATH
 	#alias mvn='sh /Applications/apache-maven-3.2.1/bin/mvn'
         alias scpapp='scp -r /Applications/apache-tomcat-8.0.35/webapps/sniper/ cs4@srvrb:/opt/tomcat/webapps'
