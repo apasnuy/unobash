@@ -204,9 +204,9 @@ _unobashedit(){
       # Hybris part
       #MAC_HYBRIS_ENV_VARIABLES_SCRIPT_RELATIVE_PATH='Projects/idea/ctco/ctco-ecom-local/hybris/bin/platform/setantenv.sh'
       #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
-      # MAC_HYBRIS_HOME_RELATIVE=Projects/idea/ctco/ctco-ecom-local/hybris   #sergey
-      MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris #notebook
-      #MAC_HYBRIS_HOME_RELATIVE=~/Documents/ctc-tmp/hybris/hybris  #iMac
+      #git commit difference part between two macs
+      MAC_HYBRIS_HOME_RELATIVE=/Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris #notebook
+      #MAC_HYBRIS_HOME_RELATIVE=/Documents/ctc-tmp/hybris/hybris  #iMac
      
       #Maven properties
        export M2_HOME=$MAC_M2_HOME
