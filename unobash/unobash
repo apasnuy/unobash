@@ -146,7 +146,7 @@ unobash(){
     --version | -v)   echo Unobash
                       echo version: $UNOBASH_VERSION;;
     --changelog | -c) echo "Changes:"
-                      echo "- project tools: add console aoutput monitor, Slack notifications, h*tool for logs, clioutput redirection
+                      echo "- project tools: add console aoutput monitor, Slack notifications, h*tool for logs, clioutput redirection"
                       echo "- screen: change DEV connection string to one command with hop"
                       echo "- jmeter: add alias to run with proxy"
                       echo "- MacOS terminal files/folder/link hightligting"
