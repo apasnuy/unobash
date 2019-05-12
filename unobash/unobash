@@ -138,14 +138,30 @@ unobash(){
        echo "###### Installation:"
        echo "Section is not coplete now. See ICloud manuals."
        echo "###### Options:"
-       echo "--version        : show unubash version"
-       echo "--changelog      : show changes"
+       echo "--version | -v        : show unubash version"
+       echo "--changelog | -c      : show changes"
+       echo "--reset | -r          : reset unobash"
+       echo "--edit | -e           : Edit unobash"
   }
+ _reset_unobash(){
+   if [[ $OS == $OS_TYPE_UBUNTU ]]
+
+          then
+		source ~/.bash_profile
+          else	
+		source ~/.bash_profile
+   fi
+ }
+
+_unobashedit(){
+   vim ~/.unobash/unobash/unobash
+}
 
   case $1 in
     --version | -v)   echo Unobash
                       echo version: $UNOBASH_VERSION;;
     --changelog | -c) echo "Changes:"
+		      echo "- add unobash reset and edit options"
                       echo "- project tools: add console aoutput monitor, Slack notifications, h*tool for logs, clioutput redirection"
                       echo "- screen: change DEV connection string to one command with hop"
                       echo "- jmeter: add alias to run with proxy"
@@ -155,6 +171,8 @@ unobash(){
                       echo "- .bashrc in .unobash folder accessible by link from ~/"
                       echo "- unobash -changelog option"
                       echo "- fix of fhen other users see hardcoded home to cs4. Now it defined by whoami";;
+    --reset | -r)     echo "Resetting unobash."; _reset_unobash;;
+    --edit | -e)      echo "Start Editing Unobash. Don't forget to commit changes after"; _unobashedit;;
     --help | -h)      _print_unobash_help;;
     *)                echo "Error! Check command usage: --help";;
               
@@ -187,7 +205,8 @@ unobash(){
       #MAC_HYBRIS_ENV_VARIABLES_SCRIPT_RELATIVE_PATH='Projects/idea/ctco/ctco-ecom-local/hybris/bin/platform/setantenv.sh'
       #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
       # MAC_HYBRIS_HOME_RELATIVE=Projects/idea/ctco/ctco-ecom-local/hybris   #sergey
-      MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris
+      MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris #notebook
+      #MAC_HYBRIS_HOME_RELATIVE=~/Documents/ctc-tmp/hybris/hybris  #iMac
      
       #Maven properties
        export M2_HOME=$MAC_M2_HOME
@@ -266,7 +285,6 @@ unobash(){
            
            export UNISON_HOME=$MAC_UNISON_HOME
            export PATH=$PATH:$UNISON_HOME/bin 
-           alias unobashedit='vim ~/.unobash/unobash/unobash'
 
           # hybris part
              export HYBRIS_HOME=$HOME/$MAC_HYBRIS_HOME_RELATIVE
@@ -321,9 +339,9 @@ git() {
      fi;
  }
 
-    setHybrisStuff () {
+    hsethybrisstuff () {
         case $OS in 
-          Mac) curdir=$(pwd); cd ${HOME}; cd ${MAC_PLATFORM_HOME_RELATIVE_PATH}; . setantenv.sh; cd $curdir;;
+          Mac) PLATFORM_HOME=$(pwd); curdir=$(pwd); cd $PLATFORM_HOME; . setantenv.sh; cd $curdir;;
         esac
     }
     setHybrisStuff; 
