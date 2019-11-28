@@ -1,6 +1,15 @@
 # Screen uses .bashrc instead .bash_profile
+#defshell -bash
 shell -$SHELL
-termcapinfo xterm-256color|xterm-color|xterm|xterms|xs|rxvt ti@:te@
-# set screen scrollback
-scrollback 1000000
-screen -t bash
+
+
+# make aware of terminal type where screen run?
+    #termcapinfo xterm-256color|xterm-color|xterm|xterms|xs|rxvt ti@:te@
+    termcapinfo ti@:te@
+
+
+#set screen scrollback
+    #scrollback 10000 #refuses to work since some day
+    defscrollback 10000
+# make session inside screen to allow proccesses run when you detaches
+    screen -t bash

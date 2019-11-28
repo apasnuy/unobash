@@ -1,9 +1,19 @@
 # Screen uses .bashrc instead .bash_profile
+# Screen uses .bashrc instead .bash_profile
+#defshell -bash
 shell -$SHELL
-termcapinfo xterm-256color|xterm-color|xterm|xterms|xs|rxvt ti@:te@
-# set screen scrollback
-scrollback 1000000
-screen -t bash
+
+
+# make aware of terminal type where screen run?
+    #termcapinfo xterm-256color|xterm-color|xterm|xterms|xs|rxvt ti@:te@
+    termcapinfo ti@:te@
+
+
+#set screen scrollback
+    #scrollback 10000 #refuses to work since some day
+    defscrollback 10000
+# make session inside screen to allow proccesses run when you detaches
+    screen -t bash
 select 0
 #stuff "bash^M"
 screen -t mac
@@ -11,17 +21,18 @@ select 1
 screen -t "DEV VM"
 select 2
 #stuff "ssh dev@192.168.56.11^M"
-stuff "ssh -t cs4@epuakyiw1056.kyiv.epam.com -p 2222 -i ~/.ssh/proxy_rsa ssh dev@192.168.56.11^M"
+#stuff "ssh -t cs4@epuakyiw1056.kyiv.epam.com -p 2222 -i ~/.ssh/proxy_rsa ssh dev@192.168.56.11^M"
+stuff "ssh -o PubkeyAuthentication=no remo@imac^M"
 screen -t UAT151
 select 3
-stuff "ssh idii@q93pajhybr05.3p.adx.ctcx"
+stuff "ssh -o PubkeyAuthentication=no iecu@q93pajhybr05.3p.adx.ctcx"
 screen -t UAT152
 select 4
-stuff "ssh idii@q93pajhybr06.3p.adx.ctcx"
+stuff "ssh -o PubkeyAuthentication=no iecu@q93pajhybr06.3p.adx.ctcx"
 screen -t QA17
 select 5
-stuff "ssh iecu@ajlcq-hba14.labcorp.ad.ctc"
+stuff "ssh -o PubkeyAuthentication=no iecu@ajlcq-hba14.labcorp.ad.ctc"
 screen -t QA15
 select 6
 stuff "cd ~/.unobash^M"
-stuff "ssh iecu@Q9LCAJHYBR01.labcorp.ad.ctc"
+stuff "ssh -o PubkeyAuthentication=no iecu@Q9LCAJHYBR01.labcorp.ad.ctc"

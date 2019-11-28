@@ -206,7 +206,7 @@ _unobashedit(){
       #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
       # MAC_HYBRIS_HOME_RELATIVE=Projects/idea/ctco/ctco-ecom-local/hybris   #sergey
       MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris #notebook
-      #MAC_HYBRIS_HOME_RELATIVE=~/Documents/ctc-tmp/hybris/hybris  #iMac
+      #MAC_HYBRIS_HOME_RELATIVE=~/Documents/Work/Projects/idea/hybris-docker  #iMac
      
       #Maven properties
        export M2_HOME=$MAC_M2_HOME
@@ -324,7 +324,7 @@ _unobashedit(){
 		             #alias psjava='ps -ef | grep -i java'
 			     #alias jmeter='sh /opt/apache-jmeter-5.0/bin/jmeter.sh'
              alias hMocksStart='mvn clean install -DskipTests jetty:run -Pdocker' 
-
+           
       fi 
 
 git() {
@@ -341,16 +341,18 @@ git() {
 
     hsethybrisstuff () {
         case $OS in 
-          Mac) PLATFORM_HOME=$(pwd); curdir=$(pwd); cd $PLATFORM_HOME; . setantenv.sh; cd $curdir;;
+          #Mac) PLATFORM_HOME=$(pwd); curdir=$(pwd); cd $PLATFORM_HOME; . setantenv.sh; cd $curdir;;
         esac
     }
-    setHybrisStuff; 
+    hsethybrisstuff; 
 
 hnotifyAppStartup() {
   emptyness=""
     while [[ true ]]
       do
-        grepResult=`grep -e "INFO: Server startup\|\[Reflections\] Reflections took" $HYBRIS_STARTUP_LOG_FILE;`
+        #grepResult=`grep -e "INFO: Server startup\|\[Reflections\] Reflections took" $HYBRIS_STARTUP_LOG_FILE;`
+        #grepResult=`grep -e "PM org.apache.coyote.AbstractProtocol start" -A 5 $HYBRIS_STARTUP_LOG_FILE;`
+        grepResult=`grep "PM org.apache.catalina.startup.Catalina start" -A 3 -B 5 $HYBRIS_STARTUP_LOG_FILE;`
         if [[ $grepResult != $emptyness ]] ; then           
           slack chat send  "Task finished! :)" -ch terminal;
           slack chat send  "$grepResult" -ch terminal; 
@@ -378,8 +380,14 @@ hnotifyAppBuild() {
 
 	# Sources
 	source ~/.unobash/unobash/git/git-completion.bash
-	
-     firstTaskPath=${HOME}/Documents/hera/repo/task1/trunk
+      source /Users/cs4/.unobash/unobash/git/git-completion.bash
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || {
+    # if not found in /usr/local/etc, try the brew --prefix location
+    [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && \
+        . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+}
+	firstTaskPath=${HOME}/Documents/hera/repo/task1/trunk
      secondTaskPath=${HOME}/Documents/hera/repo/task2/trunk
 
       tmpDir=${HOME}/tmp;
