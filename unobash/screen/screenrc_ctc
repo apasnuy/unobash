@@ -7,7 +7,7 @@ shell -$SHELL
 
 #set screen scrollback
     #scrollback 10000 #refuses to work since some day
-    defscrollback 1000000
+    defscrollback 100000
 # make session inside screen to allow proccesses run when you detaches
     screen -t zsh
 select 0

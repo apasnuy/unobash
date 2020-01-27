@@ -1,7 +1,7 @@
 # Screen uses .bashrc instead .bash_profile
 shell -$SHELL
 # set screen scrollback
-scrollback 1000000
+defscrollback 1000000
 
 screen -t git
 select 0
