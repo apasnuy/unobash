@@ -64,7 +64,6 @@
 
 
 
-
 # # # # # # # #     CS4 cs4 mods    # # # # # # # #
 
 UNOBASH_VERSION=0.2.0
@@ -142,7 +141,6 @@ _unobashedit(){
       #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
       #git commit difference part between two macs
       #MAC_HYBRIS_HOME_RELATIVE=/Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris #notebook
-      #MAC_HYBRIS_HOME_RELATIVE=/Documents/Work/Projects/idea/hybris-docker/hybris/hybris  #iMac
       MAC_HYBRIS_HOME_RELATIVE=Documents/Work/app/hybris  #iMac
       #Maven properties
        export M2_HOME=$MAC_M2_HOME
@@ -280,7 +278,7 @@ git() {
           Mac) PLATFORM_HOME=$(pwd); curdir=$(pwd); cd $PLATFORM_HOME; . setantenv.sh; cd $curdir;;
         esac
     }
-    #hsethybrisstuff; 
+    #hsethybrisstuff;
 
 hnotifyAppStartup() {
   emptyness=""
@@ -315,7 +313,7 @@ hnotifyAppBuild() {
 	# Sources
   if [ -n $SHELL ]
       then case $SHELL in
-              "/bin/zsh") echo "git complition aupport for Zsh is over oh-my-zsh. ~/.unobash/unobash/git/git-completion.bash skipped. oh-my-zsh will be configured.\n "
+              "/bin/zsh") echo "git complition support for Zsh is over oh-my-zsh. ~/.unobash/unobash/git/git-completion.bash skipped. oh-my-zsh will be configured.\n "
                           autoload -Uz compinit -i
 			  compinit -i
                           echo "ToDo: ZSH insecure directories should be fixed not suppresed by -i otion"
@@ -332,12 +330,12 @@ hnotifyAppBuild() {
 		                   case "$TERM" in
 		                   xterm-color) color_prompt=yes;;
 		                   esac
-		   
+
 		           # uncomment for a colored prompt, if the terminal has the capability; turned
 		           # off by default to not distract the user: the focus in a terminal window
 		           # should be on the output of commands, not on the prompt
 		           #force_color_prompt=yes
-		   
+
 		                   if [ -n "$force_color_prompt" ]; then
 		                   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 		           # We have color support; assume it's compliant with Ecma-48
@@ -346,17 +344,17 @@ hnotifyAppBuild() {
 		                   color_prompt=yes
 		                   else
 		                   color_prompt=
-		   
+
 		                   fi
 		                   fi
-		   
+
 		                   if [ "$color_prompt" = yes ]; then
 		                   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 		                   else
 		                   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 		                   fi
 		                   unset color_prompt force_color_prompt
-		   
+
 		           # If this is an xterm set the title to user@host:dir
 		                   case "$TERM" in
 		                   xterm*|rxvt*)
@@ -369,11 +367,11 @@ hnotifyAppBuild() {
 		           # You may want to put all your additions into a separate file like
 		           # ~/.bash_aliases, instead of adding them here directly.
 		           # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-		   
+
 		                   if [ -f ~/.bash_aliases ]; then
 		                   . ~/.bash_aliases
 		                   fi
-		   
+
 		           # enable programmable completion features (you don't need to enable
 		           # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 		           # sources /etc/bash.bashrc).
