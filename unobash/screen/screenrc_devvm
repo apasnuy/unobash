@@ -5,31 +5,32 @@ scrollback 1000000
 
 screen -t git
 select 0
-stuff "cd /app/ctco-ecom^M"
-screen -t bash
+stuff "hgit^M"
+screen -t zsh
 select 1
-screen -t bash
+screen -t zsh
 select 2
-screen -t bash
+screen -t zsh
 select 3
-screen -t bash
+screen -t zsh
 select 4
-screen -t bash
+screen -t zsh
 select 5
 screen -t "---------------  Run  ----------------"
 select 6
 screen -t "Hybris START"
 select 7
-stuff "cd /app/hybris/bin/platform^M"
-stuff "ant clean all updatesystem -Dtenant=master && sh hybrisserver.sh debug  | tee ../../log/hybris_start_\"$(date +%F_%R)\".log"
+stuff "hplat^M"
+stuff ". ./setantenv.sh^M"
+stuff "ant clean all updatesystem -Dtenant=master && sh hybrisserver.sh debug  &> \$HYBRIS_STARTUP_LOG_FILE"
 screen -t "Hybris STOP"
 select 8
-stuff "cd /app/hybris/bin/platform^M"
+stuff "hplat^M"
 stuff "sh hybrisserver.sh stop"
-screen -t "IBM MQ"
+screen -t "LOGS"
 select 9
-stuff "/opt/mqm/bin/strmqm QM_DEVELOP^M"
-screen -t "CTCMocks"
+stuff "hlog"
+screen -t "Docker"
 select 10
-stuff "cd /app/ctc-mocks/^M"
-stuff "mvn jetty:run^M"
+stuff "hgit^M"
+stuff "docker-compose up -d^M"
