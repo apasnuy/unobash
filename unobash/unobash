@@ -141,7 +141,8 @@ _unobashedit(){
       #MAC_HYBRIS_JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/'
       #git commit difference part between two macs
       #MAC_HYBRIS_HOME_RELATIVE=/Documents/Work/Projects/idea/ctco-ecom-d/hybris/hybris #notebook
-      MAC_HYBRIS_HOME_RELATIVE=Documents/Work/app/hybris  #iMac
+      #MAC_HYBRIS_HOME_RELATIVE=Documents/Work/Projects/ctco-ecom/hybris/hybris  #iMac
+      MAC_HYBRIS_HOME_RELATIVE=/app/hybris  #iMac
       #Maven properties
        export M2_HOME=$MAC_M2_HOME
        export M3_HOME=$MAC_M2_HOME
@@ -221,7 +222,8 @@ _unobashedit(){
            export PATH=$PATH:$UNISON_HOME/bin 
 
           # hybris part
-             export HYBRIS_HOME=$HOME/$MAC_HYBRIS_HOME_RELATIVE
+             #export HYBRIS_HOME=$HOME/$MAC_HYBRIS_HOME_RELATIVE  # MacBook
+             export HYBRIS_HOME=$MAC_HYBRIS_HOME_RELATIVE   # iMac
       	     export PLATFORM_HOME=$HYBRIS_HOME/bin/platform/
       	    
              HYBRIS_PROJECT_DIR=/Users/remo/Documents/Work/Projects/ctco-ecom
