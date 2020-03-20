@@ -226,7 +226,8 @@ _unobashedit(){
              export HYBRIS_HOME=$MAC_HYBRIS_HOME_RELATIVE   # iMac
       	     export PLATFORM_HOME=$HYBRIS_HOME/bin/platform/
       	    
-             HYBRIS_PROJECT_DIR=/Users/remo/Documents/Work/Projects/ctco-ecom
+             # HYBRIS_PROJECT_DIR=/Users/cs4/Documents/Work/Projects/idea/ctco-ecom-d/ctco-ecom # Macbook
+             HYBRIS_PROJECT_DIR=/Users/remo/Documents/Work/Projects/ctco-ecom                 # iMac             
              HYBRIS_STARTUP_LOG_FILE_NAME=cs-startup.log
 	     ANT_LOG_FILE_NAME=$HYBRIS_STARTUP_LOG_FILE_NAME
              HYBRIS_LOGS_HOME=$HYBRIS_HOME/log
